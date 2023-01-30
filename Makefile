@@ -14,3 +14,7 @@ bin/es_windows:
 	mkdir -p bin
 	GOOS=windows GOARCH=amd64 go build -o bin/es_windows cmd/es/*.go
 	openssl sha512 bin/es_windows > bin/es_windows.sha512
+
+.PHONY: docker
+docker:
+	docker build -t es .
