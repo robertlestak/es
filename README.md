@@ -25,6 +25,8 @@ Usage of es:
         print variables and values
 ```
 
+If an argument is provided, it will be used as the input file.
+
 ## Examples
 
 ### Simple
