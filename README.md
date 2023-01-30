@@ -25,8 +25,8 @@ curl https://raw.githubusercontent.com/robertlestak/es/main/scripts/install.sh |
 
 ```bash
 Usage of es:
-  -e string
-        comma separated list of env files
+  -e value
+        environment file
   -i string
         input file (default "-")
   -l string
@@ -48,7 +48,7 @@ If an argument is provided, it will be used as the input file.
 `es` can be used as a drop-in replacement for `envsubst`:
 
 ```bash
-$ echo "Hello, ${USER}!" | es
+$ echo 'Hello, ${USER}!' | es
 Hello, root!
 $ echo 'Hello, ${USER}!' > hello.txt
 $ es hello.txt
@@ -93,7 +93,7 @@ Hello, root!
 $ echo 'Hello, ${USER} this is ${NAME}!' > hello.txt
 $ echo 'USER=es' > foo.env
 $ echo 'NAME=envsubst on steroids' > bar.env
-$ es -i hello.txt -e foo.env,bar.env
+$ es -i hello.txt -e foo.env -e bar.env
 Hello, es this is envsubst on steroids!
 ```
 

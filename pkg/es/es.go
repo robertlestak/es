@@ -104,7 +104,7 @@ func EnvKeysInDir(d string) ([]string, error) {
 
 func ProcessDir(inDir *string, outDir *string, require bool) error {
 	l := log.WithFields(log.Fields{
-		"fn": "processDir",
+		"fn": "ProcessDir",
 		"i":  *inDir,
 		"o":  *outDir,
 		"r":  require,
@@ -132,7 +132,6 @@ func ProcessDir(inDir *string, outDir *string, require bool) error {
 		// process the data
 		d, err := ProcessData(bd, require)
 		if err != nil {
-			l.Error(err)
 			return err
 		}
 		// write the data to the output dir
@@ -149,7 +148,6 @@ func ProcessDir(inDir *string, outDir *string, require bool) error {
 		return nil
 	})
 	if err != nil {
-		l.Error(err)
 		return err
 	}
 	return nil

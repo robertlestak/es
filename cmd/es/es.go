@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/robertlestak/es/internal/data"
 	"github.com/robertlestak/es/internal/env"
@@ -60,7 +59,11 @@ func main() {
 	requireVars := flag.Bool("r", false, "require all variables to be set")
 	inFile := flag.String("i", "-", "input file")
 	outFile := flag.String("o", "-", "output file")
-	envFiles := flag.String("e", "", "comma separated list of env files")
+	var envFiles []string
+	flag.Func("e", "environment file", func(s string) error {
+		envFiles = append(envFiles, s)
+		return nil
+	})
 	printVariables := flag.Bool("v", false, "print variables")
 	printVariableVals := flag.Bool("vv", false, "print variables and values")
 	logLevel := flag.String("l", "info", "log level")
@@ -70,9 +73,8 @@ func main() {
 		l.Fatal(err)
 	}
 	log.SetLevel(ll)
-	if envFiles != nil && *envFiles != "" {
-		ef := strings.Split(*envFiles, ",")
-		if err := env.ReadEnvFiles(ef); err != nil {
+	if len(envFiles) > 0 {
+		if err := env.ReadEnvFiles(envFiles); err != nil {
 			l.Fatal(err)
 		}
 	}
@@ -113,7 +115,6 @@ func main() {
 		}
 		err := es.ProcessDir(inFile, outFile, *requireVars)
 		if err != nil {
-			l.Error(err)
 			os.Exit(1)
 		}
 		if createdDir {
@@ -127,7 +128,6 @@ func main() {
 		}
 		d, err = es.ProcessData(d, *requireVars)
 		if err != nil {
-			l.Error(err)
 			os.Exit(1)
 		}
 		err = data.OutData(d, outFile)
