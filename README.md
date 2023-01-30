@@ -7,6 +7,20 @@
 * Traversing a directory and substituting all files
 * Printing variables and their values used in a file (or directory of files)
 
+## Install
+
+### From Source
+
+```bash
+make
+```
+
+### From GitHub
+
+```bash
+curl https://raw.githubusercontent.com/robertlestak/es/main/scripts/install.sh | bash
+```
+
 ## Usage
 
 ```bash
