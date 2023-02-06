@@ -11,6 +11,11 @@ import (
 	log "github.com/sirupsen/logrus"
 )
 
+var (
+	// Version is the version of the binary
+	Version = "dev"
+)
+
 func printVars(inFile *string, vals bool) {
 	l := log.WithFields(log.Fields{
 		"fn": "printVars",
@@ -67,7 +72,13 @@ func main() {
 	printVariables := flag.Bool("v", false, "print variables")
 	printVariableVals := flag.Bool("vv", false, "print variables and values")
 	logLevel := flag.String("l", "info", "log level")
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "es version %s\n", Version)
+		fmt.Fprintf(os.Stderr, "Usage: es [options] [input file]\n")
+		flag.PrintDefaults()
+	}
 	flag.Parse()
+
 	ll, err := log.ParseLevel(*logLevel)
 	if err != nil {
 		l.Fatal(err)
